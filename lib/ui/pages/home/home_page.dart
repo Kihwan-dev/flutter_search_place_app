@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_search_place_app/ui/pages/review/review_page.dart';
 
 class HomePage extends StatelessWidget {
   TextEditingController searchTextEditingController = TextEditingController();
@@ -25,31 +26,36 @@ class HomePage extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 18),
         itemCount: 10,
         itemBuilder: (context, index) {
-          return Container(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(
-                color: Colors.grey[300]!,
-                width: 2,
-              ),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "구의3동 주민센터",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ReviewPage()));
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(
+                  color: Colors.grey[300]!,
+                  width: 2,
                 ),
-                Text("구의3동 주민센터"),
-                Text("구의3동 주민센터"),
-              ],
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "구의3동 주민센터",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text("구의3동 주민센터"),
+                  Text("구의3동 주민센터"),
+                ],
+              ),
             ),
           );
         },
