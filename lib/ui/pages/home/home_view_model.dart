@@ -23,6 +23,6 @@ class HomeViewModel extends Notifier<HomeState> {
 }
 
 // 3. 뷰모델 관리자 만들기 - NotifierProvider 객체
-final homeViewModelProvider = NotifierProvider<HomeViewModel, HomeState>(() {
+final homeViewModel = NotifierProvider<HomeViewModel, HomeState>(() {
   return HomeViewModel();
 });
