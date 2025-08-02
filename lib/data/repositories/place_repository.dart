@@ -5,7 +5,7 @@ import 'package:flutter_search_place_app/data/repositories/base_remote_repositor
 
 class PlaceRepository extends BaseRemoteRepository {
   //
-  Future<List<Place>> searchPlace(String area) async {
+  Future<List<Place>> searchPlaces(String area) async {
     //
     final response = await client.get(
       "",
