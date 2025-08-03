@@ -1,8 +1,8 @@
-// 1. 상태 클래스 만들기
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_search_place_app/data/models/place.dart';
 import 'package:flutter_search_place_app/data/repositories/place_repository.dart';
 
+// 1. 상태 클래스 만들기
 class HomeState {
   List<Place> places;
   HomeState(this.places);
