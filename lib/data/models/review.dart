@@ -4,7 +4,6 @@ class Review {
   String content;
   double mapX;
   double mapY;
-  String address;
   DateTime createdAt;
 
   Review({
@@ -12,7 +11,6 @@ class Review {
     required this.content,
     required this.mapX,
     required this.mapY,
-    required this.address,
     required this.createdAt,
   });
 
@@ -23,7 +21,6 @@ class Review {
           content: map["content"],
           mapX: map["mapX"],
           mapY: map["mapY"],
-          address: map["address"],
           createdAt: DateTime.parse(map["createdAt"]),
         );
 
@@ -34,7 +31,6 @@ class Review {
       "content": content,
       "mapX": mapX,
       "mapY": mapY,
-      "address": address,
       "createdAt": createdAt.toIso8601String(),
     };
   }

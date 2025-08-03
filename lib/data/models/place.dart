@@ -14,11 +14,15 @@ class Place {
   String title;
   String category;
   String roadAddress;
+  double mapX;
+  double mapY;
 
   Place({
     required this.title,
     required this.category,
     required this.roadAddress,
+    required this.mapX,
+    required this.mapY,
   });
 
   // 1. fromJson 네임드 생성자 만들기
@@ -27,6 +31,8 @@ class Place {
           title: map["title"],
           category: map["category"],
           roadAddress: map["roadAddress"],
+          mapX: map["mapX"],
+          mapY: map["mapY"],
         );
 
   // 2. toJson 메서드 만들기
@@ -35,6 +41,8 @@ class Place {
       "title": title,
       "category": category,
       "roadAddress": roadAddress,
+      "mapX": mapX,
+      "mapY": mapY,
     };
   }
 }

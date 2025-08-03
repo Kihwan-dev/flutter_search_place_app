@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_search_place_app/data/models/place.dart';
 import 'package:flutter_search_place_app/data/models/review.dart';
 
 class ReviewRepository {
-  Future<List<Review>> getReivewsByAddress(String address) async {
+  Future<List<Review>> getReivewsByAddress(Place place) async {
     try {
       // 1. 파이어스토어 인스턴스 가지고 오기
       final firestore = FirebaseFirestore.instance;
@@ -24,7 +25,7 @@ class ReviewRepository {
               return Review.fromJson(map);
             },
           )
-          .where((review) => review.address == address)
+          .where((review) => review.mapX == place.mapX && review.mapY == place.mapY)
           .toList();
     } catch (e) {
       print("오류 발생");
