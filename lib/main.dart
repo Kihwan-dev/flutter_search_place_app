@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final place = Place(title: "타이틀", category: "카테고리", roadAddress: "주소", mapX: 127.09295783100004, mapY: 37.535002325700546);
+    final place = Place(title: "타이틀", category: "카테고리", roadAddress: "주소", mapX: 127.0929309, mapY: 37.4242296);
     return MaterialApp(
       home: ReviewPage(place),
       // home: HomePage(),
