@@ -2,15 +2,15 @@
 class Review {
   String id;
   String content;
-  double mapX;
-  double mapY;
+  String mapx;
+  String mapy;
   DateTime createdAt;
 
   Review({
     required this.id,
     required this.content,
-    required this.mapX,
-    required this.mapY,
+    required this.mapx,
+    required this.mapy,
     required this.createdAt,
   });
 
@@ -19,8 +19,8 @@ class Review {
       : this(
           id: map["id"],
           content: map["content"],
-          mapX: map["mapX"],
-          mapY: map["mapY"],
+          mapx: map["mapx"],
+          mapy: map["mapy"],
           createdAt: DateTime.parse(map["createdAt"]),
         );
 
@@ -29,8 +29,8 @@ class Review {
     return {
       "id": id,
       "content": content,
-      "mapX": mapX,
-      "mapY": mapY,
+      "mapx": mapx,
+      "mapy": mapy,
       "createdAt": createdAt.toIso8601String(),
     };
   }

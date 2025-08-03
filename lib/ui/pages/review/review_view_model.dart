@@ -17,27 +17,31 @@ class ReviewState {
 class ReviewViewModel extends AutoDisposeFamilyNotifier<ReviewState, Place> {
   @override
   ReviewState build(Place arg) {
+    getReviews(mapx: arg.mapx, mapy: arg.mapy);
     return ReviewState(
       isWriting: false,
       reviews: [],
     );
   }
 
-  Future<void> getReviews(double mapX, double mapY) async {
+  Future<void> getReviews({
+    required String mapx,
+    required String mapy,
+  }) async {
     final reviewRepo = ReviewRepository();
-    final reviews = await reviewRepo.getReivewsByAddress(mapX: mapX, mapY: mapY);
+    final reviews = await reviewRepo.getReivewsByCoordinate(mapx: mapx, mapy: mapy);
     state = ReviewState(isWriting: false, reviews: reviews);
   }
 
   // 리뷰 작성
   Future<bool> addReview({
     required String content,
-    required double mapX,
-    required double mapY,
+    required String mapx,
+    required String mapy,
   }) async {
     final reviewRepo = ReviewRepository();
     state = ReviewState(isWriting: true, reviews: state.reviews);
-    final result = await reviewRepo.addReview(content: content, mapX: mapX, mapY: mapY);
+    final result = await reviewRepo.addReview(content: content, mapx: mapx, mapy: mapy);
     await Future.delayed(Duration(milliseconds: 500));
     state = ReviewState(isWriting: false, reviews: state.reviews);
     return result;
