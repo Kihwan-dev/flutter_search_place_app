@@ -18,7 +18,7 @@ class ReviewViewModel extends AutoDisposeFamilyNotifier<ReviewState, Place> {
   @override
   ReviewState build(Place arg) {
     // getReviews(mapx: arg.mapx, mapy: arg.mapy);
-    listenStream();
+    listenStream(arg.mapx, arg.mapy);
     return ReviewState(
       isWriting: false,
       reviews: [],
@@ -48,11 +48,16 @@ class ReviewViewModel extends AutoDisposeFamilyNotifier<ReviewState, Place> {
     return result;
   }
 
-  void listenStream() {
+  void listenStream(String mapx, String mapy) {
     final stream = reviewRepo.reviewListStream();
     final streamSubscription = stream.listen(
       (reviews) {
-        state = ReviewState(isWriting: false, reviews: reviews);
+        final filterReivews = reviews
+            .where(
+              (review) => review.mapx == mapx && review.mapy == mapy,
+            )
+            .toList();
+        state = ReviewState(isWriting: false, reviews: filterReivews);
       },
     );
 
