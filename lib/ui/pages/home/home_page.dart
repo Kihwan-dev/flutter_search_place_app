@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
               final place = places[index];
               return GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => ReviewPage(place.title)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ReviewPage(place)));
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
