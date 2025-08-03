@@ -17,18 +17,20 @@ class ReviewState {
 class ReviewViewModel extends AutoDisposeFamilyNotifier<ReviewState, Place> {
   @override
   ReviewState build(Place arg) {
-    getReviews(mapx: arg.mapx, mapy: arg.mapy);
+    // getReviews(mapx: arg.mapx, mapy: arg.mapy);
+    listenStream();
     return ReviewState(
       isWriting: false,
       reviews: [],
     );
   }
 
+  final reviewRepo = ReviewRepository();
+
   Future<void> getReviews({
     required String mapx,
     required String mapy,
   }) async {
-    final reviewRepo = ReviewRepository();
     final reviews = await reviewRepo.getReivewsByCoordinate(mapx: mapx, mapy: mapy);
     state = ReviewState(isWriting: false, reviews: reviews);
   }
@@ -39,12 +41,24 @@ class ReviewViewModel extends AutoDisposeFamilyNotifier<ReviewState, Place> {
     required String mapx,
     required String mapy,
   }) async {
-    final reviewRepo = ReviewRepository();
     state = ReviewState(isWriting: true, reviews: state.reviews);
     final result = await reviewRepo.addReview(content: content, mapx: mapx, mapy: mapy);
     await Future.delayed(Duration(milliseconds: 500));
     state = ReviewState(isWriting: false, reviews: state.reviews);
     return result;
+  }
+
+  void listenStream() {
+    final stream = reviewRepo.reviewListStream();
+    final streamSubscription = stream.listen(
+      (reviews) {
+        state = ReviewState(isWriting: false, reviews: reviews);
+      },
+    );
+
+    ref.onDispose(() {
+      streamSubscription.cancel();
+    });
   }
 }
 
