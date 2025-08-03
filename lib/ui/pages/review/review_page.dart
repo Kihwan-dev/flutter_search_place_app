@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
 class ReviewPage extends StatelessWidget {
-  const ReviewPage({super.key});
+  ReviewPage(this.placeName);
+  String placeName;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("해운대해수욕장"),
+        title: Text(placeName),
       ),
       backgroundColor: Colors.white,
       body: ListView.separated(

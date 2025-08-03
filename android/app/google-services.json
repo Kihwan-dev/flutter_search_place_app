@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "163024281288",
+    "project_id": "flutter-search-place-app",
+    "storage_bucket": "flutter-search-place-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:163024281288:android:407cdf39a9728a72b60ffd",
+        "android_client_info": {
+          "package_name": "com.example.flutter_search_place_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmN3RlmoQDXUmgL23nt6S7u9_v2fZtDTk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
