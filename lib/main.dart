@@ -12,9 +12,6 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  final reviewRepo = ReviewRepository();
-  await reviewRepo.getAll();
-
   runApp(ProviderScope(child: const MyApp()));
 }
 
