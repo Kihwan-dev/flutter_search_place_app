@@ -26,23 +26,37 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Consumer(builder: (context, ref, child) {
-            return TextField(
-              controller: searchTextEditingController,
-              onSubmitted: (value) {
-                ref.read(homeViewModel.notifier).searchPlaces(value);
-              },
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(
-                    color: Colors.grey,
-                    width: 2,
+          title: Consumer(
+            builder: (context, ref, child) {
+              return TextField(
+                controller: searchTextEditingController,
+                onSubmitted: (value) {
+                  ref.read(homeViewModel.notifier).searchPlaces(value);
+                },
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                      color: Colors.grey,
+                      width: 2,
+                    ),
                   ),
                 ),
+              );
+            },
+          ),
+          actions: [
+            Container(
+              width: 50,
+              height: 50,
+              child: GestureDetector(
+                onTap: () {
+                  print("gps");
+                },
+                child: Icon(Icons.gps_fixed),
               ),
-            );
-          }),
+            ),
+          ],
         ),
         body: Consumer(builder: (context, ref, child) {
           final places = ref.watch(homeViewModel).places;
