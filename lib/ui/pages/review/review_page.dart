@@ -83,6 +83,8 @@ class _ReviewPageState extends ConsumerState<ReviewPage> {
                                 GestureDetector(
                                   onTap: () {
                                     print("삭제");
+                                    viewModel.deleteReview(review.id);
+                                    Navigator.pop(context);
                                   },
                                   child: Container(
                                     width: double.infinity,
