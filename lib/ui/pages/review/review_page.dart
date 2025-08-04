@@ -13,6 +13,7 @@ class ReviewPage extends ConsumerStatefulWidget {
 
 class _ReviewPageState extends ConsumerState<ReviewPage> {
   TextEditingController reviewTextEditingController = TextEditingController();
+  TextEditingController editTextEditingController = TextEditingController();
 
   @override
   void dispose() {
@@ -61,6 +62,32 @@ class _ReviewPageState extends ConsumerState<ReviewPage> {
                                 GestureDetector(
                                   onTap: () {
                                     print("수정");
+                                    Navigator.pop(context);
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        editTextEditingController.text = review.content;
+                                        return Dialog(
+                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(24.0),
+                                            child: TextField(
+                                              controller: editTextEditingController,
+                                              onSubmitted: (value) async {
+                                                await viewModel.editReview(id: review.id, content: editTextEditingController.text).then(
+                                                  (value) {
+                                                    if (!context.mounted) return;
+                                                    Navigator.pop(context);
+                                                  },
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                    // Navigator.pop(context);
+                                    // editTextEditingController.dispose();
                                   },
                                   child: Container(
                                     width: double.infinity,
