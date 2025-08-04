@@ -29,7 +29,6 @@ class _ReviewPageState extends ConsumerState<ReviewPage> {
       onTap: () {
         if (reviewState.isWriting) return;
         FocusScope.of(context).unfocus();
-        reviewTextEditingController.text = "";
       },
       child: Scaffold(
         appBar: AppBar(
@@ -42,31 +41,101 @@ class _ReviewPageState extends ConsumerState<ReviewPage> {
           itemCount: reviewState.reviews.length,
           itemBuilder: (context, index) {
             final review = reviewState.reviews[index];
-            return Container(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-              decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.grey[400]!,
-                  ),
-                  borderRadius: BorderRadius.circular(18)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    review.content,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+            return GestureDetector(
+              onLongPress: () {
+                print("long press");
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return Center(
+                      child: Material(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.white,
+                        child: SizedBox(
+                          width: 150,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    print("수정");
+                                  },
+                                  child: Container(
+                                    width: double.infinity,
+                                    color: Colors.transparent,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.edit, size: 26),
+                                        SizedBox(width: 8),
+                                        Text(
+                                          "수정",
+                                          style: TextStyle(fontSize: 24, height: 2),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Divider(height: 1),
+                                GestureDetector(
+                                  onTap: () {
+                                    print("삭제");
+                                  },
+                                  child: Container(
+                                    width: double.infinity,
+                                    color: Colors.transparent,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.delete, size: 24),
+                                        SizedBox(width: 8),
+                                        Text(
+                                          "삭제",
+                                          style: TextStyle(fontSize: 24, height: 2),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+                decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.grey[400]!,
                     ),
-                  ),
-                  Text(
-                    review.createdAt.toIso8601String(),
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 14,
+                    borderRadius: BorderRadius.circular(18)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      review.content,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                ],
+                    Text(
+                      review.createdAt.toIso8601String(),
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           },

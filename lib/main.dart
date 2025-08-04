@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_search_place_app/data/models/place.dart';
 import 'package:flutter_search_place_app/data/repositories/review_repository.dart';
@@ -13,7 +14,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
+  // debugPaintSizeEnabled = true;
   runApp(ProviderScope(child: const MyApp()));
 }
 
@@ -23,9 +24,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final place = Place(title: "타이틀", category: "카테고리", roadAddress: "주소", mapx: "127.0929309", mapy: "37.4242296");
     return MaterialApp(
-      // home: ReviewPage(place),
       home: HomePage(),
     );
   }
