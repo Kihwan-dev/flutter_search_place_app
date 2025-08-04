@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_search_place_app/core/geolocator_helper.dart';
 import 'package:flutter_search_place_app/ui/pages/home/home_view_model.dart';
 import 'package:flutter_search_place_app/ui/pages/review/review_page.dart';
 
@@ -50,8 +51,8 @@ class _HomePageState extends State<HomePage> {
               width: 50,
               height: 50,
               child: GestureDetector(
-                onTap: () {
-                  print("gps");
+                onTap: () async {
+                  print(await GeolocatorHelper.getPosition());
                 },
                 child: Icon(Icons.gps_fixed),
               ),
