@@ -47,16 +47,19 @@ class _HomePageState extends State<HomePage> {
             },
           ),
           actions: [
-            Container(
-              width: 50,
-              height: 50,
-              child: GestureDetector(
-                onTap: () async {
-                  print(await GeolocatorHelper.getPosition());
-                },
-                child: Icon(Icons.gps_fixed),
-              ),
-            ),
+            Consumer(builder: (context, ref, child) {
+              return Container(
+                width: 50,
+                height: 50,
+                child: GestureDetector(
+                  onTap: () async {
+                    final address = await ref.read(homeViewModel.notifier).searchByCurrentLocation();
+                    searchTextEditingController.text = address.isEmpty ? "" : address;
+                  },
+                  child: Icon(Icons.gps_fixed),
+                ),
+              );
+            }),
           ],
         ),
         body: Consumer(builder: (context, ref, child) {

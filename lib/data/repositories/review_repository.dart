@@ -62,19 +62,24 @@ class ReviewRepository {
   }
 
   Stream<List<Review>> reviewListStream() {
-    final firestore = FirebaseFirestore.instance;
-    final collectionRef = firestore.collection("reviews").orderBy("createdAt", descending: true);
-    final stream = collectionRef.snapshots();
-    final newStream = stream.map((event) {
-      return event.docs.map(
-        (e) {
-          return Review.fromJson({
-            "id": e.id,
-            ...e.data(),
-          });
-        },
-      ).toList();
-    });
-    return newStream;
+    try {
+      final firestore = FirebaseFirestore.instance;
+      final collectionRef = firestore.collection("reviews").orderBy("createdAt", descending: true);
+      final stream = collectionRef.snapshots();
+      final newStream = stream.map((event) {
+        return event.docs.map(
+          (e) {
+            return Review.fromJson({
+              "id": e.id,
+              ...e.data(),
+            });
+          },
+        ).toList();
+      });
+      return newStream;
+    } catch (e) {
+      print(e);
+      return Stream.empty();
+    }
   }
 }
