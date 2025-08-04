@@ -10,7 +10,7 @@ plugins {
 
 android {
     namespace = "com.example.flutter_search_place_app"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 35
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
