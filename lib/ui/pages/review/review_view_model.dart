@@ -48,6 +48,24 @@ class ReviewViewModel extends AutoDisposeFamilyNotifier<ReviewState, Place> {
     return result;
   }
 
+  Future<bool> editReview({
+    required String id,
+    required String content,
+  }) async {
+    state = ReviewState(isWriting: true, reviews: state.reviews);
+    final result = reviewRepo.updateReview(
+      id: id,
+      content: content,
+    );
+    Future.delayed(Duration(milliseconds: 500));
+    state = ReviewState(isWriting: false, reviews: state.reviews);
+    return result;
+  }
+
+  Future<bool> deleteReview(String id) async {
+    return await reviewRepo.deleteReview(id);
+  }
+
   void listenStream(String mapx, String mapy) {
     final stream = reviewRepo.reviewListStream();
     final streamSubscription = stream.listen(
