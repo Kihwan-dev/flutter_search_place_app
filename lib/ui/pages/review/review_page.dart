@@ -128,7 +128,7 @@ class _ReviewPageState extends ConsumerState<ReviewPage> {
                       ),
                     ),
                     Text(
-                      review.createdAt.toIso8601String(),
+                      review.createdAt.toString(),
                       style: TextStyle(
                         color: Colors.grey,
                         fontSize: 14,

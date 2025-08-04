@@ -61,6 +61,38 @@ class ReviewRepository {
     }
   }
 
+  Future<bool> updateReview({
+    required String id,
+    required String content,
+  }) async {
+    try {
+      final firestore = FirebaseFirestore.instance;
+      final collectionRef = firestore.collection("reviews");
+      final docRef = collectionRef.doc(id);
+      await docRef.update({
+        "content": content,
+        "createdAt": DateTime.now().toIso8601String(),
+      });
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  Future<bool> deleteReview(String id) async {
+    try {
+      final firestore = FirebaseFirestore.instance;
+      final collectionRef = firestore.collection("reviews");
+      final docRef = collectionRef.doc(id);
+      await docRef.delete();
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
   Stream<List<Review>> reviewListStream() {
     try {
       final firestore = FirebaseFirestore.instance;
