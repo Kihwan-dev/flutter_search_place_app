@@ -62,7 +62,14 @@ class _HomePageState extends State<HomePage> {
             }),
           ],
         ),
-        body: PlaceListView(),
+        body: Consumer(builder: (context, ref, child) {
+          final homeState = ref.watch(homeViewModel);
+          return homeState.isSearching
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : PlaceListView();
+        }),
       ),
     );
   }
