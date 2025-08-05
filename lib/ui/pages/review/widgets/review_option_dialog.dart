@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_search_place_app/data/models/place.dart';
 import 'package:flutter_search_place_app/data/models/review.dart';
 import 'package:flutter_search_place_app/ui/pages/review/review_view_model.dart';
 
-class ReviewOptionDialog extends StatelessWidget {
-  ReviewOptionDialog({required this.editTextEditingController, required this.viewModel, required this.review});
+class ReviewOptionDialog extends StatefulWidget {
+  ReviewOptionDialog({
+    required this.review,
+    required this.place,
+  });
 
-  final TextEditingController editTextEditingController;
-  final ReviewViewModel viewModel;
   final Review review;
+  final Place place;
+
+  @override
+  State<ReviewOptionDialog> createState() => _ReviewOptionDialogState();
+}
+
+class _ReviewOptionDialogState extends State<ReviewOptionDialog> {
+  final TextEditingController editingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -22,44 +33,50 @@ class ReviewOptionDialog extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                _getDialogOption(
-                    title: "수정",
-                    onTap: () {
-                      Navigator.pop(context);
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          editTextEditingController.text = review.content;
-                          return Dialog(
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                            child: Padding(
-                              padding: const EdgeInsets.all(24.0),
-                              child: TextField(
-                                controller: editTextEditingController,
-                                onSubmitted: (value) async {
-                                  await viewModel.editReview(id: review.id, content: editTextEditingController.text).then((_) {
-                                    if (!context.mounted) return;
-                                    Navigator.pop(context);
-                                  });
-                                },
+                Consumer(builder: (context, ref, child) {
+                  final viewModel = ref.read(reviewViewModel(widget.place).notifier);
+                  return _getDialogOption(
+                      title: "수정",
+                      onTap: () {
+                        Navigator.pop(context);
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            editingController.text = widget.review.content;
+                            return Dialog(
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(24.0),
+                                child: TextField(
+                                  controller: editingController,
+                                  onSubmitted: (value) async {
+                                    await viewModel.editReview(id: widget.review.id, content: editingController.text).then((_) {
+                                      if (!context.mounted) return;
+                                      Navigator.pop(context);
+                                    });
+                                  },
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                      );
-                      // Navigator.pop(context);
-                      // editTextEditingController.dispose();
-                    }), // 수정
+                            );
+                          },
+                        );
+                        // Navigator.pop(context);
+                        // editTextEditingController.dispose();
+                      });
+                }), // 수정
                 Divider(height: 1),
-                _getDialogOption(
-                  title: "삭제",
-                  onTap: () async {
-                    await viewModel.deleteReview(review.id).then((_) {
-                      if (!context.mounted) return;
-                      Navigator.pop(context);
-                    });
-                  },
-                ),
+                Consumer(builder: (context, ref, build) {
+                  final viewModel = ref.read(reviewViewModel(widget.place).notifier);
+                  return _getDialogOption(
+                    title: "삭제",
+                    onTap: () async {
+                      await viewModel.deleteReview(widget.review.id).then((_) {
+                        if (!context.mounted) return;
+                        Navigator.pop(context);
+                      });
+                    },
+                  );
+                }),
               ],
             ),
           ),

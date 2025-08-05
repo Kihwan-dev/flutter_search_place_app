@@ -1,32 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_search_place_app/data/models/place.dart';
+import 'package:flutter_search_place_app/ui/pages/home/home_view_model.dart';
 import 'package:flutter_search_place_app/ui/pages/review/review_page.dart';
 
 class PlaceListView extends StatelessWidget {
-  PlaceListView(this.places);
-
-  final List<Place> places;
-
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-      itemCount: places.length,
-      itemBuilder: (context, index) {
-        final place = places[index];
-        return GestureDetector(
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => ReviewPage(place)));
-          },
-          child: _getPlaceCard(place),
-        );
-      },
-      separatorBuilder: (context, index) {
-        return SizedBox(
-          height: 20,
-        );
-      },
-    );
+    return Consumer(builder: (context, ref, child) {
+      List<Place> places = ref.watch(homeViewModel).places;
+      return ListView.separated(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+        itemCount: places.length,
+        itemBuilder: (context, index) {
+          final place = places[index];
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ReviewPage(place)));
+            },
+            child: _getPlaceCard(place),
+          );
+        },
+        separatorBuilder: (context, index) {
+          return SizedBox(
+            height: 20,
+          );
+        },
+      );
+    });
   }
 
   Container _getPlaceCard(Place place) {

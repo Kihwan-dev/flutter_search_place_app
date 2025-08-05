@@ -65,10 +65,7 @@ class _HomePageState extends State<HomePage> {
             }),
           ],
         ),
-        body: Consumer(builder: (context, ref, child) {
-          final places = ref.watch(homeViewModel).places;
-          return PlaceListView(places);
-        }),
+        body: PlaceListView(),
       ),
     );
   }
