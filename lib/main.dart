@@ -1,12 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_search_place_app/data/models/place.dart';
-import 'package:flutter_search_place_app/data/repositories/review_repository.dart';
 import 'package:flutter_search_place_app/firebase_options.dart';
 import 'package:flutter_search_place_app/ui/pages/home/home_page.dart';
-import 'package:flutter_search_place_app/ui/pages/review/review_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

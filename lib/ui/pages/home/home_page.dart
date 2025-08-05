@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_search_place_app/core/geolocator_helper.dart';
-import 'package:flutter_search_place_app/data/models/place.dart';
 import 'package:flutter_search_place_app/ui/pages/home/home_view_model.dart';
 import 'package:flutter_search_place_app/ui/pages/home/widgets/place_list_view.dart';
-import 'package:flutter_search_place_app/ui/pages/review/review_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
