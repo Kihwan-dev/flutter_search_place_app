@@ -19,6 +19,9 @@ class ReviewViewModel extends AutoDisposeFamilyNotifier<ReviewState, Place> {
   ReviewState build(Place arg) {
     // getReviews(mapx: arg.mapx, mapy: arg.mapy);
     listenStream(arg.mapx, arg.mapy);
+
+    // flutter task Future 우선순위
+
     return ReviewState(
       isWriting: false,
       reviews: [],
