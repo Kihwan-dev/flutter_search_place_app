@@ -26,39 +26,40 @@ class ReviewOptionDialog extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Consumer(builder: (context, ref, child) {
-                  final viewModel = ref.read(reviewViewModel(place).notifier);
-                  return _getDialogOption(
-                      title: "수정",
-                      onTap: () {
-                        Navigator.pop(context);
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            final TextEditingController editingController = TextEditingController();
-                            editingController.text = review.content;
-                            return Dialog(
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(24.0),
-                                child: TextField(
-                                  controller: editingController,
-                                  onSubmitted: (value) async {
-                                    await viewModel.editReview(id: review.id, content: editingController.text).then((_) {
-                                      if (!context.mounted) return;
-                                      editingController.dispose();
-                                      Navigator.pop(context);
-                                    });
-                                  },
-                                ),
-                              ),
-                            );
-                          },
+                _getDialogOption(
+                  title: "수정",
+                  onTap: () {
+                    Navigator.pop(context);
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        final TextEditingController editingController = TextEditingController();
+                        editingController.text = review.content;
+                        return Dialog(
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(24.0),
+                            child: Consumer(builder: (context, ref, child) {
+                              final viewModel = ref.read(reviewViewModel(place).notifier);
+                              return TextField(
+                                controller: editingController,
+                                onSubmitted: (value) async {
+                                  await viewModel.editReview(id: review.id, content: editingController.text).then((_) {
+                                    if (!context.mounted) return;
+                                    editingController.dispose();
+                                    Navigator.pop(context);
+                                  });
+                                },
+                              );
+                            }),
+                          ),
                         );
-                        // Navigator.pop(context);
-                        // editTextEditingController.dispose();
-                      });
-                }), // 수정
+                      },
+                    );
+                    // Navigator.pop(context);
+                    // editTextEditingController.dispose();
+                  },
+                ),
                 Divider(height: 1),
                 Consumer(builder: (context, ref, build) {
                   final viewModel = ref.read(reviewViewModel(place).notifier);
