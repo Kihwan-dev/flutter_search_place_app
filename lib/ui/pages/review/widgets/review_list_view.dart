@@ -18,7 +18,6 @@ class ReviewListView extends StatelessWidget {
         itemBuilder: (context, index) {
           final review = reviewState.reviews[index];
           return _getReviewCard(
-            context: context,
             review: review,
             place: place,
           );
@@ -30,50 +29,51 @@ class ReviewListView extends StatelessWidget {
     });
   }
 
-  GestureDetector _getReviewCard({
-    required BuildContext context,
+  Widget _getReviewCard({
     required Review review,
     required Place place,
   }) {
-    return GestureDetector(
-      onLongPress: () {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return ReviewOptionDialog(
-              review: review,
-              place: place,
-            );
-          },
-        );
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-        decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.grey[400]!,
-            ),
-            borderRadius: BorderRadius.circular(18)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              review.content,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+    return Builder(builder: (context) {
+      return GestureDetector(
+        onLongPress: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return ReviewOptionDialog(
+                review: review,
+                place: place,
+              );
+            },
+          );
+        },
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+          decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.grey[400]!,
               ),
-            ),
-            Text(
-              review.createdAt.toString(),
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: 14,
+              borderRadius: BorderRadius.circular(18)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                review.content,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-          ],
+              Text(
+                review.createdAt.toString(),
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 14,
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
