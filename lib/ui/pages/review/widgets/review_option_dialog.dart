@@ -4,7 +4,7 @@ import 'package:flutter_search_place_app/data/models/place.dart';
 import 'package:flutter_search_place_app/data/models/review.dart';
 import 'package:flutter_search_place_app/ui/pages/review/review_view_model.dart';
 
-class ReviewOptionDialog extends StatefulWidget {
+class ReviewOptionDialog extends StatelessWidget {
   ReviewOptionDialog({
     required this.review,
     required this.place,
@@ -12,13 +12,6 @@ class ReviewOptionDialog extends StatefulWidget {
 
   final Review review;
   final Place place;
-
-  @override
-  State<ReviewOptionDialog> createState() => _ReviewOptionDialogState();
-}
-
-class _ReviewOptionDialogState extends State<ReviewOptionDialog> {
-  final TextEditingController editingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +27,7 @@ class _ReviewOptionDialogState extends State<ReviewOptionDialog> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Consumer(builder: (context, ref, child) {
-                  final viewModel = ref.read(reviewViewModel(widget.place).notifier);
+                  final viewModel = ref.read(reviewViewModel(place).notifier);
                   return _getDialogOption(
                       title: "수정",
                       onTap: () {
@@ -42,7 +35,8 @@ class _ReviewOptionDialogState extends State<ReviewOptionDialog> {
                         showDialog(
                           context: context,
                           builder: (context) {
-                            editingController.text = widget.review.content;
+                            final TextEditingController editingController = TextEditingController();
+                            editingController.text = review.content;
                             return Dialog(
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                               child: Padding(
@@ -50,8 +44,9 @@ class _ReviewOptionDialogState extends State<ReviewOptionDialog> {
                                 child: TextField(
                                   controller: editingController,
                                   onSubmitted: (value) async {
-                                    await viewModel.editReview(id: widget.review.id, content: editingController.text).then((_) {
+                                    await viewModel.editReview(id: review.id, content: editingController.text).then((_) {
                                       if (!context.mounted) return;
+                                      editingController.dispose();
                                       Navigator.pop(context);
                                     });
                                   },
@@ -66,11 +61,11 @@ class _ReviewOptionDialogState extends State<ReviewOptionDialog> {
                 }), // 수정
                 Divider(height: 1),
                 Consumer(builder: (context, ref, build) {
-                  final viewModel = ref.read(reviewViewModel(widget.place).notifier);
+                  final viewModel = ref.read(reviewViewModel(place).notifier);
                   return _getDialogOption(
                     title: "삭제",
                     onTap: () async {
-                      await viewModel.deleteReview(widget.review.id).then((_) {
+                      await viewModel.deleteReview(review.id).then((_) {
                         if (!context.mounted) return;
                         Navigator.pop(context);
                       });
