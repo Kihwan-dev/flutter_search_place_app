@@ -38,7 +38,11 @@ class _ReviewPageState extends State<ReviewPage> {
             title: Text(widget.place.title),
           ),
           backgroundColor: Colors.white,
-          body: ReviewListView(widget.place),
+          body: reviewState.isWriting
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : ReviewListView(widget.place),
           bottomSheet: SafeArea(
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 18, vertical: 18),

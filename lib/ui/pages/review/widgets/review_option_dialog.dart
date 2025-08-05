@@ -28,6 +28,7 @@ class ReviewOptionDialog extends StatelessWidget {
               children: [
                 _getDialogOption(
                   title: "수정",
+                  icon: Icons.edit,
                   onTap: () {
                     Navigator.pop(context);
                     showDialog(
@@ -65,6 +66,7 @@ class ReviewOptionDialog extends StatelessWidget {
                   final viewModel = ref.read(reviewViewModel(place).notifier);
                   return _getDialogOption(
                     title: "삭제",
+                    icon: Icons.delete,
                     onTap: () async {
                       await viewModel.deleteReview(review.id).then((_) {
                         if (!context.mounted) return;
@@ -83,6 +85,7 @@ class ReviewOptionDialog extends StatelessWidget {
 
   GestureDetector _getDialogOption({
     required String title,
+    required IconData icon,
     required Function() onTap,
   }) {
     return GestureDetector(
@@ -94,7 +97,7 @@ class ReviewOptionDialog extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(Icons.edit, size: 26),
+            Icon(icon, size: 26),
             SizedBox(width: 8),
             Text(
               title,

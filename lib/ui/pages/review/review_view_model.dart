@@ -17,7 +17,6 @@ class ReviewState {
 class ReviewViewModel extends AutoDisposeFamilyNotifier<ReviewState, Place> {
   @override
   ReviewState build(Place arg) {
-    // getReviews(mapx: arg.mapx, mapy: arg.mapy);
     listenStream(arg.mapx, arg.mapy);
 
     // flutter task Future 우선순위
@@ -44,27 +43,23 @@ class ReviewViewModel extends AutoDisposeFamilyNotifier<ReviewState, Place> {
     required String mapx,
     required String mapy,
   }) async {
-    state = ReviewState(isWriting: true, reviews: state.reviews);
     final result = await reviewRepo.addReview(content: content, mapx: mapx, mapy: mapy);
-    await Future.delayed(Duration(milliseconds: 500));
-    state = ReviewState(isWriting: false, reviews: state.reviews);
     return result;
   }
 
+  // 리뷰 수정
   Future<bool> editReview({
     required String id,
     required String content,
   }) async {
-    state = ReviewState(isWriting: true, reviews: state.reviews);
     final result = reviewRepo.updateReview(
       id: id,
       content: content,
     );
-    Future.delayed(Duration(milliseconds: 500));
-    state = ReviewState(isWriting: false, reviews: state.reviews);
     return result;
   }
 
+  // 리뷰 삭제
   Future<bool> deleteReview(String id) async {
     return await reviewRepo.deleteReview(id);
   }
@@ -72,12 +67,14 @@ class ReviewViewModel extends AutoDisposeFamilyNotifier<ReviewState, Place> {
   void listenStream(String mapx, String mapy) {
     final stream = reviewRepo.reviewListStream();
     final streamSubscription = stream.listen(
-      (reviews) {
+      (reviews) async {
+        state = ReviewState(isWriting: true, reviews: state.reviews);
         final filterReivews = reviews
             .where(
               (review) => review.mapx == mapx && review.mapy == mapy,
             )
             .toList();
+        await Future.delayed(Duration(milliseconds: 500));
         state = ReviewState(isWriting: false, reviews: filterReivews);
       },
     );
